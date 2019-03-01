@@ -1,0 +1,21 @@
+{
+    "name": "gitbook-plugin-table-cell-merge",
+    "description": "Plugin for merging cells in tables.",
+    "main": "index.js",
+    "version": "1.0.8",
+    "engines": {
+        "gitbook": "*"
+    },
+    "homepage": "https://github.com/hs-yonekura/gitbook-plugin-cellmerge",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/hs-yonekura/gitbook-plugin-cellmerge.git"
+    },
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/hs-yonekura/gitbook-plugin-cellmerge/issues"
+    },
+    "dependencies": {
+        "cheerio": "^1.0.0-rc.2"
+    }
+}
