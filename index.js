@@ -1,31 +1,36 @@
-const cheerio = require('cheerio');
-var h1 = 0;
-var h2 = 0;
-var h3 = 0;
+var RESET_TEMPLATE = [
+  '<style>',
+  'body {',
+  '  counter-reset: RESET;',
+  '}',
+  '</style>'
+].join('\n') + '\n';
 
 module.exports = {
+  website: {
+    assets: './assets',
+    css: [
+      'numbered-headings-website.css'
+    ]
+  },
+  ebook: {
+    assets: './assets',
+    css: [
+      'numbered-headings.css'
+    ]
+  },
   hooks: {
-    'page': function(page) {
-      const $ = cheerio.load(page.content);
-      $("h1, h2, h3").map((_, element) => {
-        switch (element.name) {
-          case 'h1':
-            h1++;
-            h2 = 0;
-            h3 = 0;
-            $(element).prepend('<span class="chapter">' + h1 + '</span>');
-            break;
-          case 'h2':
-            h2++;
-            h3 = 0;
-            $(element).prepend('<span class="chapter">' + h1 + '.' + h2 + '</span>');
-            break;
-          case 'h3':
-            h3++;
-            $(element).prepend('<span class="chapter">' + h1 + '.' + h2 + '.' + h3 + '</span>');
+    'page:before': function(page) {
+      var resetString = "none";
+      if(page.hasOwnProperty("level")) {
+        var levels = page.level.split(".");
+        resetString = "";
+        for(var i = 1; i < 4; i++) {
+            resetString += " h" + i + " " + ((levels[i]) || 0);
         }
-      });
-      page.content = $.html();
+      }
+      var counterReset = RESET_TEMPLATE.replace(/RESET/, resetString);
+      page.content = counterReset + page.content;
       return page;
     }
   }
