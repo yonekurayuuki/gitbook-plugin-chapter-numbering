@@ -26,6 +26,9 @@ module.exports = {
         var levels = page.level.split(".");
         resetString = "";
         for(var i = 1; i < 4; i++) {
+          if(i == levels.length - 1)
+            resetString += " h" + i + " " + ((levels[i]) -1 || 0);
+          else
             resetString += " h" + i + " " + ((levels[i]) || 0);
         }
       }
