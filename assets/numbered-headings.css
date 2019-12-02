@@ -18,7 +18,7 @@ body {
 }
 
 .page .section  h1:before {
-  content: counter(h1);
+  content: counter(h1) ".";
 }
 
 .page .section  h2 {
@@ -27,7 +27,7 @@ body {
 }
 
 .page .section  h2:before {
-  content: counter(h1) "." counter(h2);
+  content: counter(h1) "." counter(h2) ".";
 }
 
 .page .section  h3 {
@@ -36,7 +36,7 @@ body {
 }
 
 .page .section  h3:before {
-  content: counter(h1) "." counter(h2) "." counter(h3);
+  content: counter(h1) "." counter(h2) "." counter(h3) ".";
 }
 
 .page .section > h2:nth-child(2):before {
