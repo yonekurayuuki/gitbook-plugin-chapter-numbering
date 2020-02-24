@@ -5,6 +5,7 @@ var RESET_TEMPLATE = [
   '}',
   '</style>'
 ].join('\n') + '\n';
+var bl = false;
 
 module.exports = {
   website: {
@@ -22,14 +23,18 @@ module.exports = {
   hooks: {
     'page:before': function(page) {
       var resetString = "none";
+      var pageLevel = ''
       if(page.hasOwnProperty("level")) {
-        var levels = page.level.split(".");
+        if (page.level === '1') bl = true;
+        if (bl) pageLevel = page.level;
+        else pageLevel = page.level.replace(/^1\./, '');
+        var levels = pageLevel.split(".");
         resetString = "";
         for(var i = 1; i < 4; i++) {
-          if(i == levels.length - 1)
-            resetString += " h" + i + " " + ((levels[i]) -1 || 0);
+          if(i == levels.length)
+            resetString += " h" + i + " " + ((levels[i -1]) -1 || 0);
           else
-            resetString += " h" + i + " " + ((levels[i]) || 0);
+            resetString += " h" + i + " " + ((levels[i -1]) || 0);
         }
       }
       var counterReset = RESET_TEMPLATE.replace(/RESET/, resetString);
