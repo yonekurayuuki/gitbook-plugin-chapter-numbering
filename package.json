@@ -2,7 +2,7 @@
   "name": "gitbook-plugin-chapter-numbering",
   "description": "Plugin for numbering chapters.",
   "main": "index.js",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "engines": {
     "gitbook": "*"
   },

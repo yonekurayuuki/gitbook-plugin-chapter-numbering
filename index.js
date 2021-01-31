@@ -1,3 +1,4 @@
+const cheerio = require('cheerio');
 var RESET_TEMPLATE = [
   '<style>',
   'body {',
@@ -6,6 +7,10 @@ var RESET_TEMPLATE = [
   '</style>'
 ].join('\n') + '\n';
 var bl = false;
+var h1 = 0;
+var h2 = 0;
+var h3 = 0;
+
 
 module.exports = {
   website: {
@@ -21,7 +26,7 @@ module.exports = {
     ]
   },
   hooks: {
-    'page:before': function(page) {
+    'page': function(page) {
       var resetString = "none";
       var pageLevel = ''
       if(page.hasOwnProperty("level")) {
@@ -39,6 +44,29 @@ module.exports = {
       }
       var counterReset = RESET_TEMPLATE.replace(/RESET/, resetString);
       page.content = counterReset + page.content;
+      $ = cheerio.load(page.content);
+      $('h1, h2, h3').each(function(i, h){
+        var tagName = $(h)[0].tagName || $(h)[0].name;
+        if (tagName == 'h1')
+        {
+          h1 = h1 + 1;
+          h2 = 0;
+          h3 = 0;
+          $(h).prepend('<span class="number-for-pdf">' + h1 + '. </span>');
+        }
+        else if (tagName == 'h2')
+        {
+          h2 = h2 + 1;
+          h3 = 0;
+          $(h).prepend('<span class="number-for-pdf">' + h1 +  '.' + h2 + '. </span>');
+        }
+        else if (tagName == 'h3')
+        {
+          h3 = h3 + 1;
+          $(h).prepend('<span class="number-for-pdf">' + h1 +  '.' + h2 + '.' + h3 + '. </span>');
+        }
+      });
+      page.content = $.html();
       return page;
     }
   }

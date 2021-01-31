@@ -44,3 +44,6 @@ div[data-element=body] > h2:nth-child(2):before {
   counter-increment: unset!important;
 }
 
+.number-for-pdf {
+  display: none;
+}
