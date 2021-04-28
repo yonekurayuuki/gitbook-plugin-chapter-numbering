@@ -43,6 +43,7 @@ module.exports = {
         }
       }
       var counterReset = RESET_TEMPLATE.replace(/RESET/, resetString);
+      h1 = Number(levels[0]) - 1;
       page.content = counterReset + page.content;
       $ = cheerio.load(page.content);
       $('h1, h2, h3').each(function(i, h){
